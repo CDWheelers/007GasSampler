@@ -11,7 +11,7 @@ mq, MCP3008, and Run
 - Note: The voltage divider acts as an analog logic level converter - the tutorial utilizes a sensor with a digital output
 
 
-Tutorial to get this all to work:	
+Tutorial to get ALL of this to work:	
 
 Setup Raspberry Pi:
 	- Preliminary step: install following software to install Raspberry Pi OS on SD card: https://www.raspberrypi.com/software/
@@ -49,4 +49,7 @@ Setup Python 3:
 Install SpiDev:
 	- Connect to Raspberry Pi through VNC Viewer or Windows Command Prompt
 	- type "sudo apt-get install python3-spidev" to install SpiDev package
-	- type "
+
+Install this code package:
+	- Connect to Raspberry Pi through VNC Viewer or Windows Command Prompt
+	- type "git clone https://github.com/CDWheelers/007GasSampler" to install SpiDev package
