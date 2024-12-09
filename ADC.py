@@ -1,5 +1,5 @@
 import time
-from MCP3008 import MCP3008
+from MCP3008 import *
 
 adc = MCP3008() 
 
