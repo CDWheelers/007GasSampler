@@ -6,7 +6,7 @@ ADC.py
 
 
 Calc.py, MCP3008.py, and Run.py
-- mq, MCP3008, and Run python files adapted from: https://github.com/tutRPi/Raspberry-Pi-Gas-Sensor-MQ
+- Calc, MCP3008, and Run python files adapted from: https://github.com/tutRPi/Raspberry-Pi-Gas-Sensor-MQ
 - Tutorial: https://tutorials-raspberrypi.com/configure-and-read-out-the-raspberry-pi-gas-sensor-mq-x
 - MCP3008.py contains code that details what commands will be sent to the ADC
 - Calc.py contains calculations to interpret raw ADC readings before being output in Run.py
