@@ -1,4 +1,4 @@
-from mq import *
+from Calc import *
 import sys, time
 import logging
 
