@@ -69,5 +69,7 @@ Update This Code:
  	- Type "git pull" and repository will be updated to reflect what is uploaded on https://github.com/CDWheelers/007GasSampler
 
 Run This Code:
-  	- run update_repo.sh executable within /home/user/007GasSampler
-   	- Alternatively, type "cd 007GasSampler" then "sudo python Run.py" to run the calibration and sensing code, outputs ppm of ammonia nearby, Ro of sensor, and load voltage
+  	- Type "cd 007GasSampler" then "sudo python Run.py" to run the calibration and sensing code, outputs ppm of ammonia nearby, Ro of sensor, and load voltage
+
+
+   
