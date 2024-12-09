@@ -27,10 +27,10 @@ class MQ():
         self.MQ_PIN = analogPin
         self.adc = MCP3008()
         
-        self.NH3Curve = [1.699,-0.678,-0.26]    # two points are taken from the curve. 
-                                                # with these two points, a line is formed which is "approximately equivalent"
+        self.NH3Curve = [1.699,-0.678,-0.26]    # average slope is calculated from the datasheet
+                                                # with this slope and approximated datapoint, a line is formed which is "approximately equivalent"
                                                 # to the original curve. 
-                                                # data format:{ x, y, slope}; point1: (lg200, -0.823), point2: (lg10, -0.488) 
+                                                # data format:{ x, y, slope}; point: (log50, -0.678)
 
         print("Calibrating...")
         self.Ro = self.MQCalibration(self.MQ_PIN)
