@@ -1,4 +1,4 @@
-Resources 11111
+Resources
 
 ADC.py
 - ADC python file adapted from: https://github.com/freenove/Freenove_Ultimate_Starter_Kit_for_Raspberry_Pi
@@ -58,11 +58,18 @@ Update Raspberry Pi:
 	- Connect to Raspberry Pi through VNC Viewer or Windows Command Prompt
 	- Type "sudo apt update && sudo apt full-upgrade" to fully upgrade Raspberry Pi
 
-Install this code package:
+Install This Code:
 	- Connect to Raspberry Pi through VNC Viewer or Windows Command Prompt
 	- Type "git clone https://github.com/CDWheelers/007GasSampler" to install this package
  	- This package will be installed to path: /home/user/007GasSampler
-  	- Type "cd 007GasSampler" then "sudo python Run.py" to run the calibration and sensing code
+
+Update This Code:
+	- Connect to Raspberry Pi through VNC Viewer or Windows Command Prompt
+	- Type "cd 007GasSampler" to navigate to path of cloned repository
+ 	- Type "git pull" and repository will be updated to reflect what is uploaded on https://github.com/CDWheelers/007GasSampler
+
+Run This Code:
+  	- Type "cd 007GasSampler" then "sudo python Run.py" to run the calibration and sensing code, outputs ppm of ammonia nearby, Ro of sensor, and load voltage
 
 
    
