@@ -25,7 +25,7 @@ Setup Raspberry Pi:
 	- Finally, Install Raspberry Pi OS 64-bit on SD card and insert SD card in Raspberry Pi once complete
 
 Setup VNC (Optional, recommended for testing & adding new features):
-	- With Raspberry Pi powered on, connect to Raspberry Pi wirelessly through your desktop. Open Command Prompt and type "ssh raspberrypi.local" *
+	- With Raspberry Pi powered on, connect to Raspberry Pi wirelessly through your desktop. Open Command Prompt and type "ssh raspberrypi.local"
 	- Enter the password that you set up before
 	- Now that connection with Pi is established, type "sudo raspi-config" the Raspberry Pi Software Configuration Tool should appear
 	- Navigate down to "Interface" and press "Enter" then Navigate to "VNC" and Press "Yes" to enable VNC Server
