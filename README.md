@@ -65,8 +65,8 @@ Install This Code:
 
 Update This Code:
 	- Connect to Raspberry Pi through VNC Viewer or Windows Command Prompt
-	- Type "cd 007GasSampler" to navigate to path of cloned repository
- 	- Type "git pull" and repository will be updated to reflect what is uploaded on https://github.com/CDWheelers/007GasSampler
+	- Type "cd 007GasSampler" to navigate to path of cloned repository and type "git pull" to update repository
+ 	- Alternatively, run update_repo.sh executable found within /home/user/007GasSampler to update repository
 
 Run This Code:
   	- Type "cd 007GasSampler" then "sudo python Run.py" to run the calibration and sensing code, outputs ppm of ammonia nearby, Ro of sensor, and load voltage
