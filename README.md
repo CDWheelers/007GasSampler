@@ -2,7 +2,7 @@ Resources
 
 ADC.py
 - ADC python file adapted from: https://github.com/freenove/Freenove_Ultimate_Starter_Kit_for_Raspberry_Pi
-- Useful for confirming voltage readings and ensuring proper functionality. development/calibration tool
+- Used as a development/calibration tool for confirming voltage and ADC readings
 
 
 Calc.py, MCP3008.py, and Run.py
@@ -13,7 +13,7 @@ Calc.py, MCP3008.py, and Run.py
 - Note: The voltage divider acts as an analog logic level converter - the tutorial above utilizes a sensor with a digital output. A considerable amount of changes have been made.
 
 app.log
-- logs exceptions in the case that 
+- logs exceptions when there is a failure to run Run.py
 
 Tutorial to get ALL of this to work:	
 
