@@ -69,6 +69,3 @@ Update This Code:
 
 Run This Code:
   	- Type "cd 007GasSampler" then "sudo python Run.py" to run the calibration and sensing code, outputs ppm of ammonia nearby, Ro of sensor, and load voltage
-
-
-   

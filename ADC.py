@@ -17,7 +17,7 @@ def loop():
         value = adc.read(0)                       # read the ADC value of channel 0
         voltage = value / 4095 * 3.3              # calculate the voltage value of from adc integer binary number
                                                       
-        print ('ADC Value : %d, Voltage : %.2f,' %(value,voltage))
+        print ('ADC Value : %d, Voltage : %.4f,' %(value,voltage))
         time.sleep(0.1)
 
 def destroy():

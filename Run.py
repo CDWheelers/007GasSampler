@@ -13,7 +13,7 @@ try:
         sys.stdout.write("\r")
         sys.stdout.write("\033[K")
         sys.stdout.write("NH3: %g ppm" % (perc["GAS_NH3"]))
-        sys.stdout.write(" Voltage: %.3f V" % (mq.ADCRead(0)))
+        sys.stdout.write(" Voltage: %.4f V" % (mq.ADCRead(0)))
         sys.stdout.flush()
         time.sleep(0.1)
 
