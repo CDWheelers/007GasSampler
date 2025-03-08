@@ -1,6 +1,6 @@
 # first of all import the socket library 
 import socket             
- 
+
 # next create a socket object 
 s = socket.socket()         
 print ("Socket successfully created")
@@ -30,8 +30,13 @@ while True:
   print ('Got connection from', addr )
  
   # send a thank you message to the client. encoding to send byte type. 
-  c.send('Thank you for connecting'.encode()) 
- 
+  #c.send('Thank you for connecting'.encode())
+  
+  f = open("data.txt")
+  c.send(f.read()encode())
+  f.close
+
+
   # Close the connection with the client 
   c.close()
    
