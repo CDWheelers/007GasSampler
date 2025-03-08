@@ -51,6 +51,7 @@ Setup Raspberry Pi:
 		- In the event authenticity of the host cannot be established, type "yes" when prompted to continue connecting and/or follow the instructions to add correct host key in C:\\Users\\User/.ssh/known_hosts, then try connecting through ssh command again
 		- Enter the password you chose previously when prompted.
 
+	Once connection is made:
 	- By now, your desktop command prompt should be that of the Raspberry Pi's. If you see "user@raspberrypi:~ $" where "C:\Users\User>" should be, you are now viewing the terminal of your Raspberry Pi, remotely
 	- Enter command "sudo raspi-config" the Raspberry Pi Software Configuration Tool should appear
 		- Enable SPI: Navigate down to "Interface" and press "Enter" then navigate to "SPI" and press "Yes" to enable SPI interface. Note: SSH is already enabled from the Raspberry Pi Imager, don't disable it here
