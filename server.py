@@ -33,7 +33,7 @@ while True:
   #c.send('Thank you for connecting'.encode())
   
   f = open("data.txt")
-  c.send(f.read()encode())
+  c.send(f.read().encode())
   f.close
 
 
