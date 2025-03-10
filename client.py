@@ -8,9 +8,14 @@ s = socket.socket()
 port = 65432               
  
 # connect to the server on local computer 
-s.connect(('192.168.1.197', port)) 
+s.connect(('127.0.0.1', port)) 
  
 # receive data from the server and decoding to get the string.
-print (s.recv(1024).decode())
-# close the connection 
-s.close()     
+
+
+s.send('get_data\n'.encode('utf-8'))
+print (s.recv(1024).decode('utf-8'))
+# close the connection
+
+
+s.close()
