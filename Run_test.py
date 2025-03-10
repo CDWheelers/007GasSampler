@@ -1,6 +1,16 @@
+import threading
 import random
 import time
 from datetime import datetime
+import server  # Import server.py
+
+def start_server():
+    """Starts the server in a separate thread."""
+    server.server.serve_forever()
+
+# Start the server in a background thread
+server_thread = threading.Thread(target=start_server, daemon=True)
+server_thread.start()
 
 def write_random_numbers_to_file(filename, min_val, max_val, delay, decimal_places):
 
@@ -23,12 +33,12 @@ def write_random_numbers_to_file(filename, min_val, max_val, delay, decimal_plac
         with open(filename, 'w') as file: #'w' overwrites file of same filename, 'a' appends
             print(f"Writing random numbers to '{filename}'... Press Ctrl+C to stop.\n")
             
-            count = 1  # keep track of how many numbers have been written
+            count = 1  # Keep track of how many numbers have been written
             while True:
-                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-4] #get current timestamp
+                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-4] # Get current timestamp
                 random_number = round(random.uniform(min_val, max_val), decimal_places)
                 file.write(f"{timestamp} - {random_number}\n")
-                file.flush()  # ensure immediate writing to the file from program buffer
+                file.flush()  # Ensure immediate writing to the file from program buffer
                 print(f"Written {count}: {random_number} at {timestamp}")
                 count += 1
                 time.sleep(delay)
@@ -39,8 +49,8 @@ def write_random_numbers_to_file(filename, min_val, max_val, delay, decimal_plac
         print(f"Error writing to file: {e}")
 
 if __name__ == "__main__":
-    # filename = datetime.now().strftime("random_numbers_%Y-%m-%d_%H-%M-%S.txt") # creates new file with date and time in filename
-    filename = "data.txt" # for testing purposes
+    # filename = datetime.now().strftime("random_numbers_%Y-%m-%d_%H-%M-%S.txt") # Creates new file with date and time in filename
+    filename = "data.txt" # For testing purposes
     min_val = float(0.0000)
     max_val = float(100.0000)
     delay = float(2.0000)
