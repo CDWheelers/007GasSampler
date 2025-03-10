@@ -39,7 +39,8 @@ def write_random_numbers_to_file(filename, min_val, max_val, delay, decimal_plac
         print(f"Error writing to file: {e}")
 
 if __name__ == "__main__":
-    filename = datetime.now().strftime("random_numbers_%Y-%m-%d_%H-%M-%S.txt") #creates new file with date and time in filename
+    # filename = datetime.now().strftime("random_numbers_%Y-%m-%d_%H-%M-%S.txt") # creates new file with date and time in filename
+    filename = "data.txt" # for testing purposes
     min_val = float(0.0000)
     max_val = float(100.0000)
     delay = float(2.0000)
