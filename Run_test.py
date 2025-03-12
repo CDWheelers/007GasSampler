@@ -1,16 +1,10 @@
-import threading
+import subprocess
 import random
 import time
 from datetime import datetime
-import server  # Import server.py
 
-def start_server():
-    """Starts the server in a separate thread."""
-    server.server.serve_forever()
-
-# Start the server in a background thread
-server_thread = threading.Thread(target=start_server, daemon=True)
-server_thread.start()
+# Start server.py script in a seperate process
+server_process = subprocess.Popen(["python", "server.py"])
 
 def write_random_numbers_to_file(filename, min_val, max_val, delay, decimal_places):
 
@@ -57,3 +51,5 @@ if __name__ == "__main__":
     decimal_places = int(4)
 
     write_random_numbers_to_file(filename, min_val, max_val, delay, decimal_places)
+
+
