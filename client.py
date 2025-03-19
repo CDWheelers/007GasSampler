@@ -23,47 +23,39 @@ s.connect(('192.168.1.181', port))
 
 filename = "data_local.txt" # For testing purposes
 
+def get_last_line(filepath):
+	with open(filepath, 'r') as f:
+		last_line = deque(f, maxlen=1).pop().strip()
+	return last_line
+
 def most_recent():
 	print(f"Gathering most recent data")
-	def get_last_line(filepath):
-		with open(filepath, 'r') as f:
-			last_line = deque(f, maxlen=1).pop().strip()
-		return last_line
-			
-	# last_line = get_last_line('data_local.txt')
-	# print(last_line)
-		
-	# date = last_line[0:10]
-	# time = last_line[11:22]
-		
-	# cmd = 'get_data_after['+date+']['+time+']\n'
 	
-	# s.send(cmd.encode('utf-8'))
-
 	with open(filename, 'a') as file: #'w' overwrites file of same filename, 'a' appends
 		try:
 			s.settimeout(2)
 		
+			last_line = get_last_line('data_local.txt')
+			date = last_line[0:10]
+			time = last_line[11:22]
+			
+			cmd = 'get_data_after['+date+']['+time+']\n'
+
+			s.send(cmd.encode('utf-8'))
+
 			while True:
-				
-				last_line = get_last_line('data_local.txt')
-				date = last_line[0:10]
-				time = last_line[11:22]
-		
-				cmd = 'get_data_after['+date+']['+time+']\n'
-	
-				s.send(cmd.encode('utf-8'))
-				
+
 				data = s.recv(34) #recieve 34 bits at a time, since each entry in data.txt is 34 bits long
 					
 				if not data or data == b'get_data\n':  # Prevent writing the command to file
 					break
-						
+												
 				print(f"Writing to '{filename}'\n")
 				file.write(data.decode('utf-8'))
 				file.flush()  # Ensure immediate writing to the file from program buffer
-				file.close
+
 		except socket.timeout:
+			file.close()
 			print("No new data received")
 			
 if (os.path.exists("data_local.txt") == 0):
@@ -81,7 +73,7 @@ if (os.path.exists("data_local.txt") == 0):
 			# print(f"Writing to '{filename}'\n")
 			file.write(data.decode('utf-8'))
 			file.flush()  # Ensure immediate writing to the file from program buffer
- 
+
 elif (os.stat("data_local.txt").st_size == 0):
 	print(f"File empty, gathering data")
 
@@ -99,8 +91,6 @@ elif (os.stat("data_local.txt").st_size == 0):
 			file.flush()  # Ensure immediate writing to the file from program buffer
 		       
 else:
-
 		while True:
 			most_recent()
 			time.sleep(2)
-
