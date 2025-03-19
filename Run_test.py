@@ -30,10 +30,11 @@ def write_random_numbers_to_file(filename, min_val, max_val, delay, decimal_plac
             count = 1  # Keep track of how many numbers have been written
             while True:
                 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-4] # Get current timestamp
-                random_number = round(random.uniform(min_val, max_val), decimal_places)
-                file.write(f"{timestamp} - {random_number}\n")
+                # Limit random number to 4 decimal places, 8 total characters, and fill missing place values with zeros
+                random_number = "{:.4f}".format(round(random.uniform(min_val, max_val), decimal_places))
+                file.write(f"{timestamp} - {str(random_number).rjust(8,'0')}\n")
                 file.flush()  # Ensure immediate writing to the file from program buffer
-                print(f"Written {count}: {random_number} at {timestamp}")
+                # print(f"Written {count}: {str(random_number).rjust(8,'0')} at {timestamp}")
                 count += 1
                 time.sleep(delay)
 

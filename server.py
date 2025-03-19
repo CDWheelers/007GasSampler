@@ -7,6 +7,7 @@ class handler(StreamRequestHandler):
     def handle(self):
         print(f'Connected: {self.client_address[0]}:{self.client_address[1]}')
         while True:
+            """
             # get message
             msg = self.rfile.readline()
             if (msg == 'get_data\n'.encode('utf-8')):
@@ -16,6 +17,27 @@ class handler(StreamRequestHandler):
                 f.close()
                 self.wfile.write(data.encode('utf-8'))
                 self.wfile.flush()
+            """
+
+             #Calvin's updated get message block above
+            # get message
+            msg = self.rfile.readline()
+            if (msg == 'get_data\n'.encode('utf-8')):
+                print(f'Received get_data cmd')
+                f = open('data.txt','r')
+                while True:
+                    line = f.readline()
+                    if not line:
+                        break
+
+                    elif ('\n' in line):
+                        self.wfile.write(line.encode('utf-8'))
+                        #else:
+                            #break
+                f.close()
+                #self.wfile.write(data.encode('utf-8'))
+                self.wfile.flush()
+            
 
             # Assume msg command is formatted as get_data_after[yyyy-mm-dd][hh:mm:ss.ms]
             if 'get_data_after'.encode('utf-8') in msg:
@@ -29,12 +51,13 @@ class handler(StreamRequestHandler):
                     line = f.readline()
                     if not line:
                         break
-                    print(line)
-                    date = line[0:10]
-                    time = line[11:22]
-                    dateobj_b = datetime.strptime(date+' '+time, '%Y-%m-%d %H:%M:%S.%f')
-                    if (dateobj_b >= dateobj_a):
-                        self.wfile.write(line.encode('utf-8'))
+                    elif ('\n' in line):
+                        print(line)
+                        date = line[0:10]
+                        time = line[11:22]
+                        dateobj_b = datetime.strptime(date+' '+time, '%Y-%m-%d %H:%M:%S.%f')
+                        if (dateobj_b > dateobj_a):
+                            self.wfile.write(line.encode('utf-8'))
 
                 f.close()
                 self.wfile.flush()
@@ -44,7 +67,7 @@ class handler(StreamRequestHandler):
                 print(f'Disconnected: {self.client_address[0]}:{self.client_address[1]}')
                 break # exits handler, framework closes socket
             print(f'Received: {msg}')
-            self.wfile.write(msg)
+            # self.wfile.write(msg)
             self.wfile.flush()
 
 #(2) instantiate one of the server classes, passing it the server’s address and the request handler class

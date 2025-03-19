@@ -17,7 +17,7 @@ try:
     with open(filename, 'w') as file: #'w' overwrites file of same filename, 'a' appends
         print(f"Writing random numbers to '{filename}'... Press Ctrl+C to stop.\n")
 
-    mq = MQ()
+    mq = MQ();
     
     while True:
         perc = mq.MQPercentage()
