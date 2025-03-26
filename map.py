@@ -1,7 +1,6 @@
-import math
 import matplotlib.pyplot as plt
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm 
 
 # radius of Erf
 r = 1
@@ -31,9 +30,13 @@ while True:
         long = float(line[35:46])
         conc = float(line[48:56])
         
-        x = r*math.sin(math.radians(lat))*math.cos(math.radians(long))
-        y = r*math.sin(math.radians(lat))*math.sin(math.radians(long))
-        #z = r*math.cos(math.radians(lat))
+        x = long
+        y = lat
+
+        # x = r*math.sin(math.radians(lat))*math.cos(math.radians(long))
+        # y = r*math.sin(math.radians(long))*math.sin(math.radians(lat))
+        # z = r*math.cos(math.radians(lat))
+
         z = 0
 
         if (x_arr.size == 0):
@@ -57,6 +60,15 @@ f.close()
 for member in conc_arr:
     conc_norm_arr = np.append(conc_norm_arr,(member-conc_arr.min())/(conc_arr.max()-conc_arr.min()))
 
+# Use a continuous colormap
+colormap = cm.get_cmap('YlOrRd')  # or 'plasma', 'inferno', 'hot', etc.
+color_arr = colormap(conc_norm_arr)
+
+fig, ax = plt.subplots()
+ax.set_xlabel('Longitude')
+ax.set_ylabel('Latitude')
+
+"""
 # Create color codes for normalized values
 for member in conc_norm_arr:
     if (member < 0.25):
@@ -67,8 +79,16 @@ for member in conc_norm_arr:
         color_arr = np.append(color_arr,'orange')
     elif (member > 0.75):
         color_arr = np.append(color_arr,'red')
+"""
 
 # Plot data
+plt.scatter(x_arr, y_arr, c=color_arr, marker='o')
+
+ax.set_xlabel('Longitude')
+ax.set_ylabel('Latitude')
+plt.show()
+
+"""
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 ax.scatter(x_arr, y_arr, z_arr, c=color_arr, marker='o')
@@ -76,3 +96,4 @@ ax.set_xlabel('X Label')
 ax.set_ylabel('Y Label')
 ax.set_zlabel('Z Label')
 plt.show()
+"""
