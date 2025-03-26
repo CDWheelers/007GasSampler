@@ -57,7 +57,7 @@ Setup Raspberry Pi:
 		- Enable SPI: Navigate down to "Interface" and press "Enter" then navigate to "SPI" and press "Yes" to enable SPI interface. Note: SSH is already enabled from the Raspberry Pi Imager, don't disable it here
 		- Enable VNC: Again, in "Interface," navigate to "VNC" and press "Yes" to enable VNC control of the Raspberry Pi (OPTIONAL, BUT HIGHLY RECCOMENDED - See Setup VNC below for extended tutorial)
 	- Navigate to to the "Finish" button at the bottom of the Software Configuration Tool and press enter to navigate back to the Raspberry Pi terminal still remotely hosted by your command prompt
-	- Enter command "sudo apt update && sudo apt full-upgrade" to fully upgrade Raspberry Pi, and follow onscreen instrucitons
+	- Enter command "sudo apt update && sudo apt full-upgrade" to fully upgrade Raspberry Pi, and follow onscreen instructions
 	- Enter command "git clone https://github.com/CDWheelers/007GasSampler" to install this package
  		- This package will be installed to path: /home/user/007GasSampler
 		- Enter "cd 007GasSampler" to navigate to path of cloned repository and type "git pull" to update repository as needed periodically
