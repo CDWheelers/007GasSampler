@@ -53,7 +53,6 @@ Setup Raspberry Pi:
 
 	Once connection is made:
 	- By now, your desktop command prompt should be that of the Raspberry Pi's. If you see "user@raspberrypi:~ $" where "C:\Users\User>" should be, you are now viewing the terminal of your Raspberry Pi, remotely
- 	- Enter command "sudo apt update && sudo apt full-upgrade"
 	- Enter command "sudo raspi-config" the Raspberry Pi Software Configuration Tool should appear
 		- Enable SPI: Navigate down to "Interface" and press "Enter" then navigate to "SPI" and press "Yes" to enable SPI interface. Note: SSH is already enabled from the Raspberry Pi Imager, don't disable it here
 		- Enable VNC: Again, in "Interface," navigate to "VNC" and press "Yes" to enable VNC control of the Raspberry Pi (OPTIONAL, BUT HIGHLY RECCOMENDED - See Setup VNC below for extended tutorial)
