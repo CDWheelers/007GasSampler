@@ -24,7 +24,7 @@ Setup Raspberry Pi:
 	- Under "Options" check "Enable Telemetry"
 	- Finally, Install Raspberry Pi OS 64-bit on SD card and insert SD card in Raspberry Pi once complete
 	- Turn Raspberry Pi on, then connect to Raspberry Pi wirelessly through your desktop command prompt
-		
+ 
 		- In the command prompt, enter the command "ssh raspberrypi.local"
 		- In the event authenticity of the host cannot be established, type "yes" when prompted to continue connecting and/or follow the instructions to add correct host key in C:\\Users\\User/.ssh/known_hosts, then try connecting through ssh command again
 		- Enter the password you chose previously when prompted
@@ -53,6 +53,7 @@ Setup Raspberry Pi:
 
 	Once connection is made:
 	- By now, your desktop command prompt should be that of the Raspberry Pi's. If you see "user@raspberrypi:~ $" where "C:\Users\User>" should be, you are now viewing the terminal of your Raspberry Pi, remotely
+ 	- Enter command "sudo apt update && sudo apt full-upgrade"
 	- Enter command "sudo raspi-config" the Raspberry Pi Software Configuration Tool should appear
 		- Enable SPI: Navigate down to "Interface" and press "Enter" then navigate to "SPI" and press "Yes" to enable SPI interface. Note: SSH is already enabled from the Raspberry Pi Imager, don't disable it here
 		- Enable VNC: Again, in "Interface," navigate to "VNC" and press "Yes" to enable VNC control of the Raspberry Pi (OPTIONAL, BUT HIGHLY RECCOMENDED - See Setup VNC below for extended tutorial)
@@ -61,6 +62,7 @@ Setup Raspberry Pi:
 	- Enter command "git clone https://github.com/CDWheelers/007GasSampler" to install this package
  		- This package will be installed to path: /home/user/007GasSampler
 		- Enter "cd 007GasSampler" to navigate to path of cloned repository and type "git pull" to update repository as needed periodically
+
 
 To Run Code:
 	- Through ssh connection via command prompt, enter "cd 007GasSampler" then "sudo python ___.py" to run your desired script	
