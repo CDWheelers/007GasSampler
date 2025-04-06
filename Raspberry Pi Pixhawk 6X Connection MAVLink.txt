@@ -1,0 +1,84 @@
+Raspberry Pi 4B to Pixhawk 6X (TELEM2) Connection Guide
+
+This guide walks through the steps required to set up a Raspberry Pi 4B running Raspberry Pi OS 64-bit
+(Debian 12) to communicate with a Pixhawk 6X flight controller using the TELEM2 port via UART and test the
+connection using MAVLink (pymavlink).
+
+
+1. Hardware Setup
+
+- Pixhawk TELEM2 port -> Raspberry Pi UART (GPIO)
+- Use a logic level converter if needed (Pixhawk: 5V logic, Raspberry Pi: 3.3V logic)
+
+Wiring Guide:
+Pixhawk TX -> Pi RX (GPIO15 - Pin 10)
+Pixhawk RX <- Pi TX (GPIO14 - Pin 8)
+Pixhawk GND -> Pi GND (Pin 6)
+
+
+2. Enable UART on Raspberry Pi
+
+Enter command "sudo raspi-config"
+Interface Options -> Serial Port:
+- Login shell over serial? -> No
+- Enable serial hardware? -> Yes
+Then reboot
+
+The Raspberry Pi’s serial port will now be usable on /dev/serial0
+
+
+3. Update and Install Required Packages
+
+Enter command "sudo apt update && sudo apt full-upgrade"
+
+Enter command "sudo apt install python3-pip"
+
+
+4. Check Serial Configuration
+
+Edit config: enter command "sudo nano /boot/config.txt"
+
+Ensure the following lines exist:
+enable_uart=1
+dtoverlay=disable-bt
+
+Exit config.txt
+
+Disable Bluetooth modem: enter command "sudo systemctl disable hciuart"
+
+Reboot: "sudo reboot"
+
+
+5. Install 007GasSampler from GitHub
+
+Enter command "git clone https://github.com/CDWheelers/007GasSampler" to install this package. All scripts including pixhawk_telem_check.py will be installed to path: /home/user/007GasSampler
+
+
+6. Install MAVLink
+
+Debian 12 uses externally managed Python environments. To safely install pymavlink without affecting
+system packages, use a virtual environment:
+
+Install required packages: enter command "sudo apt update" and "sudo apt install python3-venv python3-full"
+
+Create a virtual environment: enter command "python3 -m venv ~/mavlink-env"
+
+Activate the virtual environment: enter command "source ~/mavlink-env/bin/activate"
+
+Install pymavlink inside the venv: enter command "pip install pymavlink"
+
+Navigate to package folder: enter command "cd 007GasSampler"
+
+Run telem check script: enter command "python3 pixhawk_telem_check.py"
+
+To exit the virtual environment later, run: "deactivate"
+Each time you want to use this setup, run: "source ~/mavlink-env/bin/activate" then "cd 007GasSampler" then "python3 pixhawk_telem_check.py" or another desired script
+
+
+7. Expected Output
+
+If the connection is working, you should see: Connection successful!
+If it fails, verify:
+- Wiring is correct
+- TELEM2 is enabled/configured on Pixhawk
+- Baud rate matches Pixhawk's port config (default is 57600)
