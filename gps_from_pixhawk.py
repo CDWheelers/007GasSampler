@@ -10,44 +10,36 @@ from pymavlink import mavutil
 serial_port = "/dev/serial0"
 baud_rate = 57600
 
-def main():
+def get_gps_data():
     print(f"Connecting to Pixhawk on {serial_port} at {baud_rate} baud...")
     try:
         # Connect to Pixhawk via serial
         master = mavutil.mavlink_connection(serial_port, baud=baud_rate)
         master.wait_heartbeat(timeout=10)
-        print("[OK] Connected to Pixhawk!")
+        print("Connected to Pixhawk!")
     except Exception as e:
-        print(f"[FAIL] Could not connect: {e}")
-        return
+        print(f"Could not connect: {e}")
+        return None, None #Return None if connection fails
 
     print("Waiting for GPS data...\n")
 
     while True:
-        # Wait for a GPS_RAW_INT message
-        msg = master.recv_match(type='GPS_RAW_INT', blocking=True, timeout=5)
+        # Wait for a GLOBAL_POSITION_INT message
+        msg = master.recv_match(type='GLOBAL_POSITION_INT', blocking=True, timeout=5)
         if not msg:
             print("No GPS data received. Retrying...")
             continue
 
         # Extract GPS information
-        fix_type = msg.fix_type
-        lat = msg.lat / 1e7  # Convert to degrees
-        lon = msg.lon / 1e7
-        alt = msg.alt / 1000.0  # Convert to meters
+        # fix_type = msg.fix_type
+        # lat = msg.lat / 1e7  # Convert to degrees
+        # lon = msg.lon / 1e7
 
-        # Fix types: 0-1 = No fix, 2 = 2D fix, 3 = 3D fix
-        fix_desc = {
-            0: "No GPS",
-            1: "No Fix",
-            2: "2D Fix",
-            3: "3D Fix",
-            4: "RTK Float",
-            5: "RTK Fixed"
-        }.get(fix_type, f"Unknown ({fix_type})")
+        lat = msg.lat
+        lon = msg.lon
 
-        print(f"[{fix_desc}] Lat: {lat:.7f}, Lon: {lon:.7f}, Alt: {alt:.2f} m")
-        time.sleep(1)
+        return lat, lon
 
 if __name__ == "__main__":
-    main()
+    lat, lon = get_gps_data()
+    print(f"Latitude: {lat}, Longitude: {lon}")

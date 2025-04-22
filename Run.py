@@ -1,13 +1,15 @@
 from Calc import *
+from gps_from_pixhawk import get_gps_data
 import sys, time
 import logging
 from datetime import datetime
 
+# Start server.py script in a separate process
+server_process = subprocess.Popen(["python", "server.py"])
+
 logging.basicConfig(filename='app.log', level=logging.ERROR)
 
-filename = "data.txt" # For testing purposes
-min_val = float(0.0000)
-max_val = float(100.0000)
+filename = "data.txt"
 delay = float(2.0000)
 decimal_places = int(4)
 
@@ -17,9 +19,12 @@ try:
     with open(filename, 'w') as file: #'w' overwrites file of same filename, 'a' appends
         print(f"Writing random numbers to '{filename}'... Press Ctrl+C to stop.\n")
 
-    mq = MQ();
+    mq = MQ()
     
     while True:
+
+        lat, lon = get_gps_data()
+
         perc = mq.MQPercentage()
         sys.stdout.write("\r")
         sys.stdout.write("\033[K")
@@ -28,9 +33,9 @@ try:
         sys.stdout.flush()
 
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-4] # Get current timestamp
-        file.write(f"{timestamp} - {mq.ADCRead(0)} ppm\n")
+        file.write(f"{timestamp}, {lat:.6f}, {lon:.6f}, {perc['GAS_NH3']:.4f}\n")
         file.flush()  # Ensure immediate writing to the file from program buffer
-        print(f"Written {mq.ADCRead(0)}ppm at {timestamp}")
+        print(f"Written {perc['GAS_NH3']:.4f}ppm at {timestamp}")
         time.sleep(0.1)
 
 except Exception as e:
