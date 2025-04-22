@@ -1,19 +1,43 @@
 import subprocess
 import time
 from datetime import datetime
-from gps_from_pixhawk import get_gps_data
+from pymavlink import mavutil
 
-# Start server.py script in a separate process
-server_process = subprocess.Popen(["python", "server.py"])
+# ------------------------------------------------------------------------------------------------------------------------------
+# GPS FETCHING FUNCTION
+# ----------------------------------------------------------------------------------------------------------------------------------
+def get_gps_data(serial_port="COM8", baud_rate=57600):
+    print(f"Connecting to Pixhawk on {serial_port} at {baud_rate} baud...")
+    try:
+        master = mavutil.mavlink_connection(serial_port, baud=baud_rate)
+        master.wait_heartbeat(timeout=10)
+        print("Connected to Pixhawk! Heartbeat received.")
+    except Exception as e:
+        print(f"[ERROR] Could not connect: {e}")
+        return None, None
 
-def write_sensor_data(filename, flight_path, initial_value, decrement, delay):
-    """
-    Writes GPS coordinates and sensor values to a file.
-    """
+    print("Waiting for GLOBAL_POSITION_INT message...\n")
+
+    while True:
+        msg = master.recv_match(type='GLOBAL_POSITION_INT', blocking=True, timeout=5)
+        if not msg:
+            print("No GPS data received. Retrying...")
+            continue
+
+        lat = msg.lat / 1e7
+        lon = msg.lon / 1e7
+
+        print(f"Latitude: {lat:.7f}, Longitude: {lon:.7f}")
+        return lat, lon
+
+# --------------------------------------------------------------------------------------------------------------------------------
+# SENSOR DATA WRITER
+# --------------------------------------------------------------------------------------------------------------------------------
+def write_sensor_data(filename, initial_value, decrement, delay):
     try:
         with open(filename, 'a') as file:
             print(f"Writing sensor data to '{filename}'... Press Ctrl+C to stop.\n")
-            count = 0
+
             sensor_value = initial_value
             
             while True:
@@ -27,18 +51,29 @@ def write_sensor_data(filename, flight_path, initial_value, decrement, delay):
                 print(f"{timestamp} - Lat: {lat:.6f}, Lon: {lon:.6f}, Value: {sensor_value:.4f}")
 
                 sensor_value -= decrement
-                count += 1
-                time.sleep(delay)
 
+                time.sleep(delay)
     except KeyboardInterrupt:
-        print("\nProcess stopped by user. Goodbye!")
+        print("\nProcess stopped by user.")
     except Exception as e:
         print(f"Error writing to file: {e}")
 
+# ---------------------------------------------------------------------------------------------------------------------------
+# MAIN SCRIPT
+# ---------------------------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
+    # Start background server 
+    try:
+        server_process = subprocess.Popen(["python", "server.py"])
+    except Exception as e:
+        print(f"Warning: Could not start server.py — {e}")
+
+    # Define parameters and generate path
     filename = "data.txt"
-    initial_value = 1000.0
-    decrement = 0.1
+    grid_size = 10
+    initial_value = 100.0
+    decrement = 0.2
     delay = 0.1
 
-write_sensor_data(filename, initial_value, decrement, delay)
+    # Write sensor data along the path
+    write_sensor_data(filename, initial_value, decrement, delay)

@@ -31,12 +31,8 @@ def get_gps_data():
             continue
 
         # Extract GPS information
-        # fix_type = msg.fix_type
-        # lat = msg.lat / 1e7  # Convert to degrees
-        # lon = msg.lon / 1e7
-
-        lat = msg.lat
-        lon = msg.lon
+        lat = msg.lat / 1e7  # Convert to degrees
+        lon = msg.lon / 1e7
 
         return lat, lon
 
