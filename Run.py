@@ -1,5 +1,8 @@
 from Calc import *
 from gps_from_pixhawk import get_gps_data
+from motor_control import motor_control
+import RPi.GPIO as GPIO
+import subprocess
 import sys, time
 import logging
 from datetime import datetime
@@ -13,6 +16,10 @@ filename = "data.txt"
 delay = float(2.0000)
 decimal_places = int(4)
 
+GPIO.setmode(GPIO.BCM)
+MOTOR_PIN = 18 # GPIO pin 18, corresponds to physical pin 12 (6th pin down on the righthand side, 4 pins lower than the 5v output)
+GPIO.setup(MOTOR_PIN, GPIO.OUT)
+
 try:
     print("Press CTRL+C to abort.")
     
@@ -24,6 +31,9 @@ try:
     while True:
 
         lat, lon = get_gps_data()
+
+        motor_control(MOTOR_PIN, 2, "on")  # Motor ON for 2 seconds
+        time.sleep(5)                     # Pause 5 sec to let sensor respond
 
         perc = mq.MQPercentage()
         sys.stdout.write("\r")
